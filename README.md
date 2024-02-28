@@ -12,7 +12,7 @@ Welcome to our Java Swing Gaming Website! This platform offers an immersive gami
 - **Variety of Games:** Engage with a diverse collection of games designed to thrill and challenge players of all levels.
 - **Cross-Platform Compatibility:** Enjoy our games across various devices with HTML5 and CSS3 compatibility, ensuring a consistent experience.
 
-##Preview
----
+
+
 
 
