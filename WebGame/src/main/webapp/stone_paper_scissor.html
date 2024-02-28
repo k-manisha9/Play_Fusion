@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Rock-Paper-Scissors</title>
+    <style>
+		body {
+  display: grid;
+  place-content: center;
+  height: 100vh;
+  font-size: 80px;
+  background: #333;
+  overflow-y: hidden;
+  min-width: 300px;
+  min-height: 400px;
+  user-select: none;
+}
+
+#player span {
+  cursor: pointer;
+  transition: all 0.5s;
+  opacity: 1;
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  bottom: 0;
+}
+#player span.chosen {
+  bottom: 25px;
+}
+#player span.hidden {
+  opacity: 0;
+  width: 0;
+}
+.noclick #player span {
+  cursor: default;
+}
+#pc {
+  position: absolute;
+  top: 40px;
+  left: calc(50vw - 40px);
+  transform: rotate(180deg);
+  transition: top 0.5s;
+}
+#pc.hidden {
+  top: -120px;
+}
+p {
+  position: absolute;
+  width: 100vw;
+  text-align: center;
+  bottom: 40px;
+  margin: 0;
+  color: #fff;
+  transition: bottom 0.5s;
+}
+p.hidden {
+  bottom: -200px;
+}
+	</style>
+</head>
+<!=======================================================>
+
+</h1>
+<span id="pc" class="hidden">✊</span>
+<div id="player">
+  <span id="rock">✊</span>
+  <span id="paper">🤚</span>
+  <span id="scissor">✌️</span>
+</div>
+<p class="hidden">You Win!</p>
+<!=======================================================>
+<script>
+	const spans = document.querySelectorAll('#player span');
+const pc = document.querySelector('#pc');
+const msg = document.querySelector('p');
+const clicked = function (event) {
+  if (!document.body.classList.contains('noclick')) {
+    document.body.classList.add('noclick');
+    const target = event.target;
+    target.classList.add('chosen');
+    for (var span of spans) {
+      if (target !== span) {
+        span.classList.add('hidden');
+      }
+    }
+    var random = parseInt(Math.random() * 3);
+    pc.textContent = spans[random].textContent;
+    pc.dataset.id = spans[random].id;
+    pc.classList.remove('hidden');
+    setTimeout(results.bind(this, target), 250);
+  }
+};
+const results = function (target) {
+  if (target.id == pc.dataset.id) {
+    msg.textContent = 'Draw';
+  }
+  if (target.id == 'rock'    && pc.dataset.id == 'paper'  || 
+      target.id == 'paper'   && pc.dataset.id == 'scissor'|| 
+      target.id == 'scissor' && pc.dataset.id == 'rock') {
+    msg.textContent = 'You lost';
+  }
+  if (target.id == 'rock'    && pc.dataset.id == 'scissor' || 
+      target.id == 'paper'   && pc.dataset.id == 'rock'    || 
+      target.id == 'scissor' && pc.dataset.id == 'paper') {
+    msg.textContent = 'You Win';
+  }
+  msg.classList.remove('hidden');
+  setTimeout(reset, 1500);
+}
+const reset = function () {
+  for (var span of spans) {
+    span.classList.remove('hidden', 'chosen');
+  }
+  msg.classList.add('hidden');
+  pc.classList.add('hidden');
+  setTimeout(function () {
+    document.body.classList.remove('noclick');
+  }, 500);
+}
+for (var span of spans) {
+  span.addEventListener('click', clicked);
+}
+	
+	
+	
+</script>
+</body>
+</html>

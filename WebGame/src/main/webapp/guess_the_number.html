@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+    
+    <title>Guess The Number</title>
+    
+    <style>
+	* {
+  font-family: monospace;
+}
+.response {
+  text-align: center;
+  margin:20px 0;
+  height: 50px;
+  color: #111;
+  font-size: 2em;
+}
+
+h3 {
+  background:transparent;
+  text-align: center;
+  margin: 0 0 20px;
+  color: #fff;
+  position:relative;
+  left:0;
+  top:0;
+  text-transform:capitalize;
+}
+
+#guess {
+  background: #333;
+  margin: auto;
+  padding: 50px;
+  border-radius: 10px;
+  font-size: 2em;
+  width: 315px;
+}
+
+.form {
+  display:flex;
+  justify-content:space-between;
+}
+
+input {
+  border: 1px solid #ddd0d2;
+  background: #FFFCFA;
+  padding: 5px;
+  width: calc(100% - 270px);
+  font-size: 1em;
+  text-align: center;
+  position:relative;
+}
+
+button {
+  background: #7eff83;
+  border: 1px solid #666;
+  padding: 5px;
+  color: #000;
+  width: 250px;
+  font-size: 1em;
+  cursor: pointer;
+  font-weight:bold;
+}
+	</style>
+</head>
+
+<body>
+	
+	
+	
+<div id="container">
+  <form id="guess">
+    <h3 class="message">Guess the number</h3>
+    <div class="form">
+      <input type="text" name="guess" placeholder="?" />
+      <button type="submit">Guess Number</button>
+    </div>
+  </form>
+  <p class="response"></p>
+</div>
+<script>
+	
+	var correctAnswer = Math.ceil(Math.random() * 100)
+var form = document.querySelector('#guess')
+var input = document.querySelector('input')
+var response = document.querySelector('.response')
+
+console.log(correctAnswer)
+
+form.addEventListener('submit', guess)
+
+function guess(e) {
+  e.preventDefault()
+  var theirAnswer = input.value
+  
+  if (theirAnswer == correctAnswer) {
+    response.innerHTML = 'Yay! You did it!'
+    correctAnswer = Math.ceil(Math.random() * 100)
+    var interval = setInterval(function(){
+      var red = Math.floor(Math.random() * 255)
+      var green = Math.floor(Math.random() * 255)
+      var blue = Math.floor(Math.random() * 255)
+      document.body.style.background = `rgb(${red}, ${green}, ${blue})`
+    }, 20)
+    setTimeout(function(){
+      clearInterval(interval)
+      document.body.style.background = '#fff'
+      response.innerHTML = ''
+      input.value = ''
+      console.log(correctAnswer)
+    }, 5000)
+  } else if (theirAnswer > correctAnswer) {
+    response.innerHTML = 'Too Big'
+  } else if (theirAnswer < correctAnswer) {
+    response.innerHTML = 'Too Small'
+  } else {
+    response.innerHTML = "That's not a number dummy!"
+  }
+}
+</script>
+</body>
+</html>
